@@ -1,0 +1,123 @@
+import { WeekendStats, Achievement } from "@/types/github";
+
+export const ACHIEVEMENTS: Achievement[] = [
+  {
+    id: "weekend-warrior",
+    name: "WEEKEND WARRIOR",
+    description: "40+ weekends committed",
+    icon: "⚔️",
+    unlocked: false,
+    rarity: "legendary",
+    requirement: "40+ weekends with commits",
+  },
+  {
+    id: "night-owl",
+    name: "NIGHT OWL",
+    description: "50+ commits after 10 PM",
+    icon: "🦉",
+    unlocked: false,
+    rarity: "rare",
+    requirement: "50+ late night commits",
+  },
+  {
+    id: "early-bird",
+    name: "EARLY BIRD",
+    description: "50+ commits before 8 AM",
+    icon: "🐔",
+    unlocked: false,
+    rarity: "epic",
+    requirement: "50+ early morning commits",
+  },
+  {
+    id: "streak-master",
+    name: "STREAK MASTER",
+    description: "15+ consecutive weekends",
+    icon: "🔥",
+    unlocked: false,
+    rarity: "legendary",
+    requirement: "15+ weekend streak",
+  },
+  {
+    id: "binge-coder",
+    name: "BINGE CODER",
+    description: "100+ commits in one weekend",
+    icon: "💻",
+    unlocked: false,
+    rarity: "rare",
+    requirement: "100+ commits single weekend",
+  },
+  {
+    id: "no-life",
+    name: "NO LIFE",
+    description: "90%+ weekends had commits",
+    icon: "💀",
+    unlocked: false,
+    rarity: "epic",
+    requirement: "90%+ dedication",
+  },
+  {
+    id: "polyglot",
+    name: "POLYGLOT",
+    description: "5+ languages on weekends",
+    icon: "📚",
+    unlocked: false,
+    rarity: "rare",
+    requirement: "5+ languages used",
+  },
+  {
+    id: "coffee-powered",
+    name: "COFFEE POWERED",
+    description: "20+ commits 2-6 AM",
+    icon: "☕",
+    unlocked: false,
+    rarity: "epic",
+    requirement: "20+ graveyard shift commits",
+  },
+  {
+    id: "legend",
+    name: "LEGEND STATUS",
+    description: "Top 5% of all users",
+    icon: "👑",
+    unlocked: false,
+    rarity: "legendary",
+    requirement: "Top 5% globally",
+  },
+];
+
+export const LOADING_MESSAGES = [
+  "LOADING PLAYER DATA...",
+  "ANALYZING YOUR WEEKEND CRIMES...",
+  "COUNTING SATURDAY COMMITS...",
+  "CHECKING SUNDAY ACTIVITY...",
+  "CALCULATING DEDICATION SCORE...",
+  "UNLOCKING ACHIEVEMENTS...",
+  "PREPARING BATTLE STATS...",
+  "ALMOST READY...",
+];
+
+export const ROAST_MESSAGES = {
+  low: [
+    "YOU WIN! (at work-life balance)",
+    "GAME OVER? Nah, you're winning at life!",
+    "Like Link, you know when to rest at an inn",
+    "Even Sonic takes breaks sometimes",
+  ],
+  medium: [
+    "DECENT SCORE! Side quest energy",
+    "Not bad, but Mario would expect more",
+    "Solid B-tier performance",
+    "You're in training mode",
+  ],
+  high: [
+    "HIGH SCORE! You're in the zone",
+    "S-RANK ACHIEVED!",
+    "Mega Man would be proud",
+    "Boss battle commitment!",
+  ],
+  extreme: [
+    "LEGENDARY! Boss battle commitment",
+    "You unlocked HARD MODE (for your health)",
+    "Sonic-speed development!",
+    "GAME BROKEN! You've exceeded limits",
+  ],
+};
