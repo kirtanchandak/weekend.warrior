@@ -66,7 +66,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="flex justify-between text-xs">
+          <div className="flex justify-between text-xs md:text-sm font-pixel">
             <span className="text-muted-foreground">LOADING</span>
             <span className="text-arcade-yellow">{progress}%</span>
           </div>
@@ -74,7 +74,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
         {/* Loading Messages */}
         <div className="h-16 flex items-center justify-center">
-          <p className="text-sm text-arcade-cyan">
+          <p className="text-sm md:text-base font-pixel text-arcade-cyan">
             {displayedText}
             <span className="blink">█</span>
           </p>

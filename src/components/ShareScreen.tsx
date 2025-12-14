@@ -1,10 +1,11 @@
 import { WeekendStats } from "@/types/github";
 import { ROAST_MESSAGES } from "@/data/mockData";
-import { Share2, RefreshCw, Twitter } from "lucide-react";
+import { Share2, RefreshCw, Twitter, Trophy } from "lucide-react";
 
 interface ShareScreenProps {
   stats: WeekendStats;
   onPlayAgain: () => void;
+  onShowLeaderboard?: () => void;
 }
 
 function getRoastLevel(commits: number): keyof typeof ROAST_MESSAGES {
@@ -14,7 +15,11 @@ function getRoastLevel(commits: number): keyof typeof ROAST_MESSAGES {
   return "extreme";
 }
 
-export function ShareScreen({ stats, onPlayAgain }: ShareScreenProps) {
+export function ShareScreen({
+  stats,
+  onPlayAgain,
+  onShowLeaderboard,
+}: ShareScreenProps) {
   const roastLevel = getRoastLevel(stats.totalWeekendCommits);
   const message =
     ROAST_MESSAGES[roastLevel][
@@ -67,12 +72,14 @@ Leaderboard: ${window.location.origin}/leaderboard`;
         </div>
 
         {/* Score Card */}
-        <div className="pixel-border bg-card p-8 space-y-6">
-          <p className="text-xs text-muted-foreground">FINAL SCORE</p>
+        <div className="pixel-border bg-card p-6 md:p-8 space-y-6">
+          <p className="text-xs md:text-sm font-pixel text-muted-foreground">
+            FINAL SCORE
+          </p>
           <div className="pixel-border bg-background p-6">
             <div className="flex items-center justify-center gap-4">
               <span className="text-arcade-yellow blink">⭐</span>
-              <span className="text-4xl md:text-5xl text-arcade-cyan">
+              <span className="text-4xl md:text-6xl font-pixel text-arcade-cyan">
                 {stats.totalWeekendCommits}
               </span>
               <span className="text-arcade-yellow blink">⭐</span>
@@ -80,7 +87,7 @@ Leaderboard: ${window.location.origin}/leaderboard`;
           </div>
 
           {/* Stats Summary */}
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-4 text-sm md:text-base font-pixel">
             <div className="text-left">
               <span className="text-muted-foreground">SAT:</span>{" "}
               <span className="text-arcade-red">{stats.saturdayCommits}</span>
@@ -92,21 +99,23 @@ Leaderboard: ${window.location.origin}/leaderboard`;
           </div>
 
           {/* Rank */}
-          <div className="pt-4 border-t border-foreground/20">
-            <p className="text-arcade-green">
+          <div className="pt-4 border-t-2 border-foreground/20">
+            <p className="text-sm md:text-base font-pixel text-arcade-green">
               🏆 TOP {stats.percentile}% OF DEVELOPERS
             </p>
           </div>
 
           {/* Top Achievement */}
           {unlockedBadges.length > 0 && (
-            <div className="pt-4 border-t border-foreground/20">
-              <p className="text-[10px] text-muted-foreground mb-2">
+            <div className="pt-4 border-t-2 border-foreground/20">
+              <p className="text-xs md:text-sm font-pixel text-muted-foreground mb-2">
                 TOP ACHIEVEMENT
               </p>
               <div className="flex items-center justify-center gap-2">
-                <span className="text-2xl">{unlockedBadges[0].icon}</span>
-                <span className="text-xs text-arcade-yellow">
+                <span className="text-2xl md:text-3xl">
+                  {unlockedBadges[0].icon}
+                </span>
+                <span className="text-sm md:text-base font-pixel text-arcade-yellow">
                   {unlockedBadges[0].name}
                 </span>
               </div>
@@ -114,30 +123,47 @@ Leaderboard: ${window.location.origin}/leaderboard`;
           )}
 
           {/* Roast Message */}
-          <p className="text-xs text-arcade-cyan italic">"{message}"</p>
+          <p className="text-xs md:text-sm font-pixel text-arcade-cyan">
+            "{message}"
+          </p>
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-4">
-          <button
-            onClick={handleTwitterShare}
-            className="arcade-button w-full flex items-center justify-center gap-2"
-          >
-            <Twitter className="w-4 h-4" />
-            SHARE ON X
-          </button>
+        <div className="space-y-3">
+          {/* Primary Actions */}
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={handleTwitterShare}
+              className="arcade-button flex items-center justify-center gap-2 text-xs md:text-sm font-pixel"
+            >
+              <Twitter className="w-4 h-4" />
+              SHARE
+            </button>
 
-          <button
-            onClick={handleShare}
-            className="arcade-button w-full flex items-center justify-center gap-2 bg-arcade-cyan"
-          >
-            <Share2 className="w-4 h-4" />
-            SHARE RESULTS
-          </button>
+            <button
+              onClick={handleShare}
+              className="arcade-button flex items-center justify-center gap-2 bg-arcade-cyan text-xs md:text-sm font-pixel"
+            >
+              <Share2 className="w-4 h-4" />
+              COPY
+            </button>
+          </div>
 
+          {/* Leaderboard Button */}
+          {onShowLeaderboard && (
+            <button
+              onClick={onShowLeaderboard}
+              className="arcade-button w-full flex items-center justify-center gap-2 bg-arcade-yellow text-background text-sm md:text-base font-pixel"
+            >
+              <Trophy className="w-4 h-4" />
+              VIEW LEADERBOARD
+            </button>
+          )}
+
+          {/* Play Again Button */}
           <button
             onClick={onPlayAgain}
-            className="arcade-button w-full flex items-center justify-center gap-2 bg-arcade-green"
+            className="arcade-button w-full flex items-center justify-center gap-2 bg-arcade-green text-sm md:text-base font-pixel"
           >
             <RefreshCw className="w-4 h-4" />
             PLAY AGAIN
@@ -145,7 +171,7 @@ Leaderboard: ${window.location.origin}/leaderboard`;
         </div>
 
         {/* Credits */}
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[10px] md:text-xs font-pixel text-muted-foreground">
           weekendwarrior.dev • 2025
         </p>
       </div>

@@ -27,7 +27,7 @@ export function TitleScreen({ onStart, onShowLeaderboard }: TitleScreenProps) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
       {/* Top HUD */}
-      <div className="absolute top-6 left-6 right-6 flex justify-between text-xs text-muted-foreground">
+      <div className="absolute top-6 left-6 right-6 flex justify-between text-xs font-pixel text-muted-foreground">
         <span>1UP: 000000</span>
         <span className="text-arcade-yellow">HIGH SCORE: 847</span>
         <span>2UP: 000000</span>
@@ -64,16 +64,20 @@ export function TitleScreen({ onStart, onShowLeaderboard }: TitleScreenProps) {
           </h1>
           <div className="flex items-center justify-center gap-2 mt-4">
             <div className="w-8 h-[2px] bg-arcade-cyan" />
-            <span className="text-xs text-arcade-cyan">GITHUB EDITION</span>
+            <span className="text-xs font-pixel text-arcade-cyan">
+              GITHUB EDITION
+            </span>
             <div className="w-8 h-[2px] bg-arcade-cyan" />
           </div>
-          <p className="text-[10px] text-muted-foreground mt-2">© 2025</p>
+          <p className="text-[10px] font-pixel text-muted-foreground mt-2">
+            © 2025
+          </p>
         </div>
 
         {/* Username Input */}
         <form onSubmit={handleSubmit} className="space-y-6 mt-12">
           <div className="pixel-border bg-card p-6 space-y-4">
-            <label className="text-xs text-arcade-yellow block text-left">
+            <label className="text-xs font-pixel text-arcade-yellow block text-left">
               ENTER GITHUB USERNAME:
             </label>
             <div className="relative">
@@ -98,7 +102,7 @@ export function TitleScreen({ onStart, onShowLeaderboard }: TitleScreenProps) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className={`
-              arcade-button w-full text-sm
+              arcade-button w-full text-sm font-pixel
               ${!username.trim() ? "opacity-50 cursor-not-allowed" : ""}
               ${isHovered && username.trim() ? "shake" : ""}
             `}
@@ -111,7 +115,7 @@ export function TitleScreen({ onStart, onShowLeaderboard }: TitleScreenProps) {
         {onShowLeaderboard && (
           <button
             onClick={onShowLeaderboard}
-            className="arcade-button w-full max-w-md text-sm bg-muted flex items-center justify-center gap-2"
+            className="arcade-button w-full max-w-md text-sm font-pixel bg-muted flex items-center justify-center gap-2"
           >
             <Trophy className="w-4 h-4" />
             LEADERBOARD
@@ -119,13 +123,13 @@ export function TitleScreen({ onStart, onShowLeaderboard }: TitleScreenProps) {
         )}
 
         {/* Blinking Prompt */}
-        <p className="text-xs text-arcade-yellow blink mt-8">
+        <p className="text-xs font-pixel text-arcade-yellow blink mt-8">
           PRESS START TO CONTINUE
         </p>
       </div>
 
       {/* Bottom HUD */}
-      <div className="absolute bottom-6 left-6 right-6 flex justify-between text-[10px] text-muted-foreground">
+      <div className="absolute bottom-6 left-6 right-6 flex justify-between text-[10px] font-pixel text-muted-foreground">
         <span>CREDITS: ∞</span>
         <span>PLAYERS ONLINE: 23,847</span>
       </div>

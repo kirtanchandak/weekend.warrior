@@ -67,6 +67,10 @@ export default function UserStatsClient({ username }: UserStatsClientProps) {
     router.push("/");
   };
 
+  const handleShowLeaderboard = () => {
+    router.push("/leaderboard");
+  };
+
   const handleRetry = () => {
     if (username) {
       fetchUserStats(username);
@@ -88,7 +92,11 @@ export default function UserStatsClient({ username }: UserStatsClientProps) {
       )}
 
       {screen === "gameover" && stats && (
-        <ShareScreen stats={stats} onPlayAgain={handlePlayAgain} />
+        <ShareScreen
+          stats={stats}
+          onPlayAgain={handlePlayAgain}
+          onShowLeaderboard={handleShowLeaderboard}
+        />
       )}
 
       {screen === "error" && (
