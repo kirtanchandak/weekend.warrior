@@ -35,19 +35,25 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
       {/* Section Header */}
       <div className="pixel-border bg-card p-4 text-center border-arcade-cyan">
         <div className="flex items-center justify-center gap-4">
-          <span className="text-arcade-red">YOU</span>
+          <span className="text-lg md:text-xl font-pixel text-arcade-red">
+            YOU
+          </span>
           <Zap className="w-6 h-6 text-arcade-yellow" />
-          <span className="text-arcade-cyan">THE WORLD</span>
+          <span className="text-lg md:text-xl font-pixel text-arcade-cyan">
+            THE WORLD
+          </span>
         </div>
       </div>
 
       {/* VS Split Screen */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-2 md:gap-4">
         {/* Your Side */}
-        <div className="pixel-border bg-card p-4 text-center border-arcade-red">
-          <div className="text-4xl mb-2">🎮</div>
-          <p className="text-xs text-arcade-red">@{stats.username}</p>
-          <div className="mt-4 space-y-2 text-[10px]">
+        <div className="pixel-border bg-card p-2 md:p-4 text-center border-arcade-red">
+          <div className="text-2xl md:text-4xl mb-1 md:mb-2">🎮</div>
+          <p className="text-[10px] md:text-sm font-pixel text-arcade-red truncate">
+            @{stats.username}
+          </p>
+          <div className="mt-2 md:mt-4 space-y-1 md:space-y-2 text-[10px] md:text-xs font-pixel">
             <div className="flex justify-between">
               <span className="text-muted-foreground">LVL</span>
               <span className="text-arcade-yellow">
@@ -66,18 +72,20 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
         {/* VS Center */}
         <div className="flex items-center justify-center">
           <div className="text-center">
-            <div className="text-3xl font-pixel text-arcade-yellow rgb-split">
+            <div className="text-2xl md:text-3xl font-pixel text-arcade-yellow rgb-split">
               VS
             </div>
-            <Zap className="w-8 h-8 mx-auto text-arcade-yellow mt-2" />
+            <Zap className="w-6 h-6 md:w-8 md:h-8 mx-auto text-arcade-yellow mt-1 md:mt-2" />
           </div>
         </div>
 
         {/* Global Side */}
-        <div className="pixel-border bg-card p-4 text-center border-arcade-cyan">
-          <div className="text-4xl mb-2">👥</div>
-          <p className="text-xs text-arcade-cyan">EVERYONE ELSE</p>
-          <div className="mt-4 space-y-2 text-[10px]">
+        <div className="pixel-border bg-card p-2 md:p-4 text-center border-arcade-cyan">
+          <div className="text-2xl md:text-4xl mb-1 md:mb-2">👥</div>
+          <p className="text-[10px] md:text-sm font-pixel text-arcade-cyan">
+            EVERYONE ELSE
+          </p>
+          <div className="mt-2 md:mt-4 space-y-1 md:space-y-2 text-[10px] md:text-xs font-pixel">
             <div className="flex justify-between">
               <span className="text-muted-foreground">AVG</span>
               <span className="text-arcade-yellow">{globalAverage}</span>
@@ -93,7 +101,7 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
       </div>
 
       {/* Comparison Bars */}
-      <div className="pixel-border bg-card p-6 space-y-6">
+      <div className="pixel-border bg-card p-4 md:p-6 space-y-4 md:space-y-6">
         {comparisons.map((comp, index) => {
           const yoursWidth = Math.min(
             (comp.yours / Math.max(comp.yours, comp.average * 2)) * 100,
@@ -114,7 +122,7 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
               className="space-y-2"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="flex justify-between text-[10px]">
+              <div className="flex justify-between text-[10px] md:text-sm font-pixel">
                 <span className="text-foreground">{comp.label}</span>
                 {winning && <span className="text-arcade-green">+{diff}%</span>}
                 {!winning && <span className="text-arcade-red">{diff}%</span>}
@@ -122,30 +130,34 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
 
               {/* Your Bar */}
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[8px] text-arcade-red w-8">YOU</span>
-                  <div className="flex-1 h-4 bg-muted border border-foreground/20">
+                <div className="flex items-center gap-1 md:gap-2">
+                  <span className="text-[8px] md:text-[10px] font-pixel text-arcade-red w-6 md:w-8">
+                    YOU
+                  </span>
+                  <div className="flex-1 h-4 md:h-5 bg-muted border border-foreground/20 md:border-2">
                     <div
                       className="h-full bg-gradient-to-r from-arcade-red to-arcade-orange transition-all duration-1000"
                       style={{ width: `${yoursWidth}%` }}
                     />
                   </div>
-                  <span className="text-[10px] text-arcade-yellow w-16 text-right">
+                  <span className="text-[10px] md:text-xs font-pixel text-arcade-yellow w-12 md:w-16 text-right">
                     {comp.yours}
                     {comp.unit}
                   </span>
                 </div>
 
                 {/* Average Bar */}
-                <div className="flex items-center gap-2">
-                  <span className="text-[8px] text-arcade-cyan w-8">AVG</span>
-                  <div className="flex-1 h-4 bg-muted border border-foreground/20">
+                <div className="flex items-center gap-1 md:gap-2">
+                  <span className="text-[8px] md:text-[10px] font-pixel text-arcade-cyan w-6 md:w-8">
+                    AVG
+                  </span>
+                  <div className="flex-1 h-4 md:h-5 bg-muted border border-foreground/20 md:border-2">
                     <div
                       className="h-full bg-gradient-to-r from-arcade-cyan to-arcade-green transition-all duration-1000"
                       style={{ width: `${avgWidth}%` }}
                     />
                   </div>
-                  <span className="text-[10px] text-muted-foreground w-16 text-right">
+                  <span className="text-[10px] md:text-xs font-pixel text-muted-foreground w-12 md:w-16 text-right">
                     {comp.average}
                     {comp.unit}
                   </span>
@@ -157,14 +169,16 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
       </div>
 
       {/* Rank Display */}
-      <div className="pixel-border bg-card p-6 text-center border-arcade-yellow">
-        <Trophy className="w-12 h-12 mx-auto text-arcade-yellow mb-4" />
-        <p className="text-sm text-arcade-yellow">GLOBAL RANK</p>
-        <p className="text-3xl text-foreground my-2">
+      <div className="pixel-border bg-card p-4 md:p-6 text-center border-arcade-yellow">
+        <Trophy className="w-10 h-10 md:w-12 md:h-12 mx-auto text-arcade-yellow mb-3 md:mb-4" />
+        <p className="text-xs md:text-base font-pixel text-arcade-yellow">
+          GLOBAL RANK
+        </p>
+        <p className="text-2xl md:text-5xl font-pixel text-foreground my-2">
           #{stats.globalRank.toLocaleString()} /{" "}
           {stats.totalPlayers.toLocaleString()}
         </p>
-        <p className="text-arcade-green text-lg">
+        <p className="text-arcade-green text-base md:text-2xl font-pixel">
           TOP {stats.percentile}% OF ALL PLAYERS
         </p>
       </div>

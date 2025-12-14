@@ -41,10 +41,12 @@ export function AchievementBadges({ achievements }: AchievementBadgesProps) {
       <div className="pixel-border bg-card p-4 text-center border-arcade-cyan">
         <div className="flex items-center justify-center gap-4">
           <span className="text-arcade-yellow blink">⭐</span>
-          <h2 className="text-lg text-foreground">ACHIEVEMENTS UNLOCKED</h2>
+          <h2 className="text-lg md:text-xl font-pixel text-foreground">
+            ACHIEVEMENTS UNLOCKED
+          </h2>
           <span className="text-arcade-yellow blink">⭐</span>
         </div>
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="text-xs md:text-sm font-pixel text-muted-foreground mt-2">
           {unlockedCount} / {achievements.length} COLLECTED
         </p>
       </div>
@@ -86,7 +88,7 @@ export function AchievementBadges({ achievements }: AchievementBadgesProps) {
                 {/* Badge Name */}
                 <h3
                   className={`
-                  text-[10px] font-bold leading-tight
+                  text-xs md:text-sm font-pixel leading-tight
                   ${
                     showAsUnlocked ? "text-foreground" : "text-muted-foreground"
                   }
@@ -96,7 +98,7 @@ export function AchievementBadges({ achievements }: AchievementBadgesProps) {
                 </h3>
 
                 {/* Description */}
-                <p className="text-[8px] text-muted-foreground leading-relaxed">
+                <p className="text-[10px] md:text-xs font-pixel text-muted-foreground leading-relaxed">
                   {showAsUnlocked
                     ? achievement.description
                     : achievement.requirement}
@@ -106,7 +108,7 @@ export function AchievementBadges({ achievements }: AchievementBadgesProps) {
                 {showAsUnlocked && (
                   <span
                     className={`
-                    text-[8px] uppercase px-2 py-0.5 inline-block
+                    text-[10px] font-pixel uppercase px-2 py-0.5 inline-block
                     ${
                       achievement.rarity === "legendary"
                         ? "bg-arcade-red text-foreground"
@@ -137,7 +139,7 @@ export function AchievementBadges({ achievements }: AchievementBadgesProps) {
               {/* Locked Overlay */}
               {!showAsUnlocked && (
                 <div className="absolute inset-0 bg-background/50 flex items-center justify-center">
-                  <span className="text-[10px] text-muted-foreground">
+                  <span className="text-xs font-pixel text-muted-foreground">
                     🔒 LOCKED
                   </span>
                 </div>

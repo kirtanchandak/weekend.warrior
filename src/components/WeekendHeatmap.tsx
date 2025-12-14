@@ -29,10 +29,14 @@ export function WeekendHeatmap({ stats }: WeekendHeatmapProps) {
       <div className="pixel-border bg-card p-4 text-center border-arcade-cyan">
         <div className="flex items-center justify-center gap-4">
           <span className="text-arcade-cyan">📅</span>
-          <h2 className="text-lg text-foreground">WEEKEND MISSION LOG</h2>
+          <h2 className="text-lg md:text-xl font-pixel text-foreground">
+            WEEKEND MISSION LOG
+          </h2>
           <span className="text-arcade-cyan">📅</span>
         </div>
-        <p className="text-xs text-muted-foreground mt-2">JAN - DEC 2025</p>
+        <p className="text-xs md:text-sm font-pixel text-muted-foreground mt-2">
+          JAN - DEC 2025
+        </p>
       </div>
 
       {/* Heatmap Grid */}
@@ -44,7 +48,7 @@ export function WeekendHeatmap({ stats }: WeekendHeatmapProps) {
             {stats.weekendsByMonth.map((month) => (
               <div
                 key={month.month}
-                className="flex-1 text-center text-[8px] text-muted-foreground"
+                className="flex-1 text-center text-[10px] font-pixel text-muted-foreground"
               >
                 {month.month}
               </div>
@@ -53,7 +57,9 @@ export function WeekendHeatmap({ stats }: WeekendHeatmapProps) {
 
           {/* Saturday Row */}
           <div className="flex items-center mb-1">
-            <div className="w-12 text-[8px] text-muted-foreground">SAT</div>
+            <div className="w-12 text-[10px] font-pixel text-muted-foreground">
+              SAT
+            </div>
             <div className="flex-1 flex gap-1">
               {stats.weekendsByMonth.map((month) =>
                 month.weeks.map((week) => {
@@ -84,7 +90,9 @@ export function WeekendHeatmap({ stats }: WeekendHeatmapProps) {
 
           {/* Sunday Row */}
           <div className="flex items-center">
-            <div className="w-12 text-[8px] text-muted-foreground">SUN</div>
+            <div className="w-12 text-[10px] font-pixel text-muted-foreground">
+              SUN
+            </div>
             <div className="flex-1 flex gap-1">
               {stats.weekendsByMonth.map((month) =>
                 month.weeks.map((week) => {
@@ -115,7 +123,7 @@ export function WeekendHeatmap({ stats }: WeekendHeatmapProps) {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-center gap-4 mt-6 text-[8px] flex-wrap">
+        <div className="flex items-center justify-center gap-4 mt-6 text-[10px] font-pixel flex-wrap">
           <div className="flex items-center gap-1">
             <div className="w-3 h-3 bg-muted border border-foreground/20" />
             <span className="text-muted-foreground">ZERO</span>
@@ -142,7 +150,7 @@ export function WeekendHeatmap({ stats }: WeekendHeatmapProps) {
       {/* Tooltip */}
       {tooltip && (
         <div
-          className="fixed z-50 pixel-border bg-background p-2 text-[8px] whitespace-pre-line pointer-events-none"
+          className="fixed z-50 pixel-border bg-background p-2 text-[10px] font-pixel whitespace-pre-line pointer-events-none"
           style={{ left: tooltip.x, top: tooltip.y }}
         >
           {tooltip.content}

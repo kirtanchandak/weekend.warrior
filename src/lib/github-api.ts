@@ -435,31 +435,31 @@ function calculateAchievements(
 
     switch (achievement.id) {
       case "weekend-warrior":
-        unlocked = totalWeeks >= 40 && totalCommits > 0;
+        unlocked = totalWeeks >= 20 && totalCommits > 0; // Reduced from 40 to 20
         break;
       case "night-owl":
-        unlocked = nightCommits >= 50;
+        unlocked = nightCommits >= 20; // Reduced from 50 to 20
         break;
       case "early-bird":
-        unlocked = earlyCommits >= 50;
+        unlocked = earlyCommits >= 20; // Reduced from 50 to 20
         break;
       case "streak-master":
-        unlocked = longestStreak >= 15;
+        unlocked = longestStreak >= 8; // Reduced from 15 to 8
         break;
       case "binge-coder":
-        unlocked = totalCommits > 500;
+        unlocked = totalCommits > 200; // Reduced from 500 to 200
         break;
       case "no-life":
-        unlocked = totalCommits / Math.max(totalWeeks, 1) > 10;
+        unlocked = totalCommits / Math.max(totalWeeks, 1) > 5; // Reduced from 10 to 5
         break;
       case "polyglot":
-        unlocked = languageCount >= 5;
+        unlocked = languageCount >= 3; // Reduced from 5 to 3
         break;
       case "coffee-powered":
-        unlocked = graveyardCommits >= 20;
+        unlocked = graveyardCommits >= 10; // Reduced from 20 to 10
         break;
       case "legend":
-        unlocked = totalCommits > 1000;
+        unlocked = totalCommits > 500; // Reduced from 1000 to 500
         break;
     }
 
