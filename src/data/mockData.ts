@@ -1,4 +1,4 @@
-import { WeekendStats, Achievement } from "@/types/github";
+import { Achievement } from "@/types/github";
 
 export const ACHIEVEMENTS: Achievement[] = [
   {

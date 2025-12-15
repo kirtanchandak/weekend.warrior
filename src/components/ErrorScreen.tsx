@@ -56,7 +56,7 @@ export function ErrorScreen({ error, onRetry, onHome }: ErrorScreenProps) {
           <p>Common issues:</p>
           <ul className="text-left space-y-1">
             <li>• GitHub token not configured</li>
-            <li>• Username doesn't exist</li>
+            <li>• Username doesn&apos;t exist</li>
             <li>• Rate limit exceeded</li>
             <li>• Network connection issues</li>
           </ul>

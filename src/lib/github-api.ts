@@ -181,7 +181,7 @@ async function processGitHubData(
   // Process weekend contributions for 2025 only
   let saturdayCommits = 0;
   let sundayCommits = 0;
-  let weekendCommitsByHour: { [hour: number]: number } = {};
+  const weekendCommitsByHour: { [hour: number]: number } = {};
   let longestStreak = 0;
   let currentStreak = 0;
   let busiestDay = { date: "", commits: 0 };

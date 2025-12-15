@@ -75,7 +75,7 @@ Leaderboard: ${window.location.origin}/leaderboard`;
         `https://twitter.com/intent/tweet?text=${tweetText}`,
         "_blank"
       );
-    } catch (error) {
+    } catch {
       // Fallback to just text
       const tweetText = encodeURIComponent(shareText);
       window.open(
@@ -234,7 +234,7 @@ Leaderboard: ${window.location.origin}/leaderboard`;
 
           {/* Roast Message */}
           <p className="text-xs md:text-sm font-pixel text-arcade-cyan text-center">
-            "{message}"
+            &quot;{message}&quot;
           </p>
 
           {/* Branding */}

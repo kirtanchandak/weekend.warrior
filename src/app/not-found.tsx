@@ -14,7 +14,7 @@ export default function NotFound() {
             </h1>
             <h2 className="text-xl font-pixel text-arcade-yellow">GAME OVER</h2>
             <p className="text-sm text-muted-foreground">
-              This page doesn't exist in our arcade!
+              This page doesn&apos;t exist in our arcade!
             </p>
           </div>
 
