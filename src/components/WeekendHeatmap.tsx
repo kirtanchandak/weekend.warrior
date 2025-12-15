@@ -1,3 +1,5 @@
+"use client";
+
 import { WeekendStats } from "@/types/github";
 import { useState } from "react";
 

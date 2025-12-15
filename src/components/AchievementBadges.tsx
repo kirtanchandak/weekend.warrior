@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Achievement } from "@/types/github";
 import { Lock } from "lucide-react";

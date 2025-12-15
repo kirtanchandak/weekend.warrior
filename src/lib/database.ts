@@ -69,9 +69,9 @@ class DatabaseService {
     }
   }
 
-  private ensureConnection(): void {
+  private async ensureConnection(): Promise<void> {
     if (!this.leaderboardCollection) {
-      throw new Error("Database not connected. Call connect() first.");
+      await this.connect();
     }
   }
 
@@ -84,7 +84,7 @@ class DatabaseService {
     longestStreak: number;
     achievements: Array<{ unlocked: boolean }>;
   }): Promise<LeaderboardEntry> {
-    this.ensureConnection();
+    await this.ensureConnection();
 
     const achievementsUnlocked = stats.achievements.filter(
       (a) => a.unlocked
@@ -114,7 +114,7 @@ class DatabaseService {
   async getUserRank(
     username: string
   ): Promise<{ rank: number; totalPlayers: number } | null> {
-    this.ensureConnection();
+    await this.ensureConnection();
 
     const user = await this.leaderboardCollection!.findOne({ username });
     if (!user) return null;
@@ -130,7 +130,7 @@ class DatabaseService {
   }
 
   async getLeaderboard(limit: number = 100): Promise<LeaderboardEntry[]> {
-    this.ensureConnection();
+    await this.ensureConnection();
 
     const leaderboard = await this.leaderboardCollection!.find({})
       .sort({ totalWeekendCommits: -1 })
@@ -145,7 +145,7 @@ class DatabaseService {
   }
 
   async getUserPercentile(username: string): Promise<number | null> {
-    this.ensureConnection();
+    await this.ensureConnection();
 
     const user = await this.leaderboardCollection!.findOne({ username });
     if (!user) return null;
@@ -163,7 +163,7 @@ class DatabaseService {
     avgDedication: number;
     avgStreak: number;
   }> {
-    this.ensureConnection();
+    await this.ensureConnection();
 
     const result = await this.leaderboardCollection!.aggregate([
       {
@@ -203,7 +203,7 @@ export async function saveUserToLeaderboard(stats: any): Promise<{
   };
 }> {
   try {
-    await databaseService.connect();
+    // Connection is handled by ensureConnection() in each method
 
     // Save user stats
     await databaseService.saveUserStats(stats);
@@ -212,8 +212,6 @@ export async function saveUserToLeaderboard(stats: any): Promise<{
     const rankInfo = await databaseService.getUserRank(stats.username);
     const percentile = await databaseService.getUserPercentile(stats.username);
     const globalAverages = await databaseService.getGlobalAverages();
-
-    await databaseService.disconnect();
 
     return {
       rank: rankInfo?.rank || 1,
@@ -241,9 +239,8 @@ export async function getLeaderboard(
   limit: number = 100
 ): Promise<LeaderboardEntry[]> {
   try {
-    await databaseService.connect();
+    // Connection is handled by ensureConnection() in each method
     const leaderboard = await databaseService.getLeaderboard(limit);
-    await databaseService.disconnect();
     return leaderboard;
   } catch (error) {
     console.error("Failed to fetch leaderboard:", error);

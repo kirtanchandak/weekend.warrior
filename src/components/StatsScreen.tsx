@@ -31,6 +31,7 @@ export function StatsScreen({ stats, onFinish }: StatsScreenProps) {
                   fill
                   className="object-cover"
                   unoptimized
+                  priority
                 />
               </div>
             </div>
