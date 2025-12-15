@@ -157,6 +157,35 @@ class DatabaseService {
 
     return Math.round((playersBelow / totalPlayers) * 100);
   }
+
+  async getGlobalAverages(): Promise<{
+    avgCommits: number;
+    avgDedication: number;
+    avgStreak: number;
+  }> {
+    this.ensureConnection();
+
+    const result = await this.leaderboardCollection!.aggregate([
+      {
+        $group: {
+          _id: null,
+          avgCommits: { $avg: "$totalWeekendCommits" },
+          avgDedication: { $avg: "$dedicationPercentage" },
+          avgStreak: { $avg: "$longestStreak" },
+        },
+      },
+    ]).toArray();
+
+    if (result.length === 0) {
+      return { avgCommits: 0, avgDedication: 0, avgStreak: 0 };
+    }
+
+    return {
+      avgCommits: Math.round(result[0].avgCommits || 0),
+      avgDedication: Math.round(result[0].avgDedication || 0),
+      avgStreak: Math.round(result[0].avgStreak || 0),
+    };
+  }
 }
 
 // Singleton instance
@@ -167,6 +196,11 @@ export async function saveUserToLeaderboard(stats: any): Promise<{
   rank: number;
   totalPlayers: number;
   percentile: number;
+  globalAverages: {
+    avgCommits: number;
+    avgDedication: number;
+    avgStreak: number;
+  };
 }> {
   try {
     await databaseService.connect();
@@ -177,6 +211,7 @@ export async function saveUserToLeaderboard(stats: any): Promise<{
     // Get user rank and percentile
     const rankInfo = await databaseService.getUserRank(stats.username);
     const percentile = await databaseService.getUserPercentile(stats.username);
+    const globalAverages = await databaseService.getGlobalAverages();
 
     await databaseService.disconnect();
 
@@ -184,14 +219,20 @@ export async function saveUserToLeaderboard(stats: any): Promise<{
       rank: rankInfo?.rank || 1,
       totalPlayers: rankInfo?.totalPlayers || 1,
       percentile: percentile || 1,
+      globalAverages,
     };
   } catch (error) {
     console.error("Failed to save user to leaderboard:", error);
-    // Return mock data if database fails
+    // Return minimal data if database fails
     return {
-      rank: Math.floor(Math.random() * 1000) + 1,
-      totalPlayers: 1000,
-      percentile: Math.floor(Math.random() * 100) + 1,
+      rank: 1,
+      totalPlayers: 1,
+      percentile: 100,
+      globalAverages: {
+        avgCommits: 0,
+        avgDedication: 0,
+        avgStreak: 0,
+      },
     };
   }
 }

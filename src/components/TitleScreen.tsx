@@ -27,10 +27,8 @@ export function TitleScreen({ onStart, onShowLeaderboard }: TitleScreenProps) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
       {/* Top HUD */}
-      <div className="absolute top-6 left-6 right-6 flex justify-between text-xs font-pixel text-muted-foreground">
-        <span>1UP: 000000</span>
-        <span className="text-arcade-yellow">HIGH SCORE: 847</span>
-        <span>2UP: 000000</span>
+      <div className="absolute top-6 left-6 right-6 flex justify-center text-xs font-pixel text-muted-foreground">
+        <span className="text-arcade-yellow">WEEKEND WARRIOR</span>
       </div>
 
       {/* Main Title Area */}
@@ -129,9 +127,8 @@ export function TitleScreen({ onStart, onShowLeaderboard }: TitleScreenProps) {
       </div>
 
       {/* Bottom HUD */}
-      <div className="absolute bottom-6 left-6 right-6 flex justify-between text-[10px] font-pixel text-muted-foreground">
-        <span>CREDITS: ∞</span>
-        <span>PLAYERS ONLINE: 23,847</span>
+      <div className="absolute bottom-6 left-6 right-6 flex justify-center text-[10px] font-pixel text-muted-foreground">
+        <span>© 2025 WEEKEND WARRIOR</span>
       </div>
     </div>
   );

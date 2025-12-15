@@ -3,28 +3,37 @@ import { LOADING_MESSAGES } from "@/data/mockData";
 
 interface LoadingScreenProps {
   onComplete: () => void;
+  isDataReady: boolean;
 }
 
-export function LoadingScreen({ onComplete }: LoadingScreenProps) {
+export function LoadingScreen({ onComplete, isDataReady }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
   const [messageIndex, setMessageIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
-    // Progress bar animation
+    // Progress bar animation - slows down near the end if data isn't ready
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
+        // Cap at 100%
         if (prev >= 100) {
           clearInterval(progressInterval);
           setTimeout(onComplete, 500);
           return 100;
         }
-        return prev + 2;
+
+        // If we're past 90% and data isn't ready, slow down dramatically
+        if (prev >= 90 && !isDataReady) {
+          return Math.min(prev + 0.5, 100); // Very slow progress, but never exceed 100
+        }
+
+        // Normal progress speed
+        return Math.min(prev + 2, 100); // Never exceed 100
       });
     }, 50);
 
     return () => clearInterval(progressInterval);
-  }, [onComplete]);
+  }, [onComplete, isDataReady]);
 
   useEffect(() => {
     // Cycle through messages
@@ -68,7 +77,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </div>
           <div className="flex justify-between text-xs md:text-sm font-pixel">
             <span className="text-muted-foreground">LOADING</span>
-            <span className="text-arcade-yellow">{progress}%</span>
+            <span className="text-arcade-yellow">{Math.floor(progress)}%</span>
           </div>
         </div>
 

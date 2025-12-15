@@ -368,6 +368,7 @@ async function processGitHubData(
     globalRank: leaderboardData.rank,
     totalPlayers: leaderboardData.totalPlayers,
     percentile: leaderboardData.percentile,
+    globalAverages: leaderboardData.globalAverages,
   };
 }
 

@@ -18,6 +18,11 @@ export interface WeekendStats {
   globalRank: number;
   totalPlayers: number;
   percentile: number;
+  globalAverages: {
+    avgCommits: number;
+    avgDedication: number;
+    avgStreak: number;
+  };
 }
 
 export interface WeekendMonth {

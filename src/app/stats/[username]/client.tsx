@@ -18,6 +18,7 @@ export default function UserStatsClient({ username }: UserStatsClientProps) {
   const [screen, setScreen] = useState<GameScreen>("loading");
   const [stats, setStats] = useState<WeekendStats | null>(null);
   const [error, setError] = useState<string>("");
+  const [isDataReady, setIsDataReady] = useState(false);
 
   useEffect(() => {
     if (username) {
@@ -28,6 +29,7 @@ export default function UserStatsClient({ username }: UserStatsClientProps) {
   const fetchUserStats = async (user: string) => {
     setScreen("loading");
     setError("");
+    setIsDataReady(false);
 
     try {
       const response = await fetch("/api/github-stats", {
@@ -45,7 +47,8 @@ export default function UserStatsClient({ username }: UserStatsClientProps) {
 
       const realStats = await response.json();
       setStats(realStats);
-      setScreen("stats");
+      setIsDataReady(true);
+      // Don't change screen here - let loading animation complete first
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Unknown error occurred";
@@ -56,8 +59,20 @@ export default function UserStatsClient({ username }: UserStatsClientProps) {
   };
 
   const handleLoadingComplete = () => {
-    setScreen("stats");
+    // Only transition to stats screen if data is ready
+    if (isDataReady && stats) {
+      setScreen("stats");
+    }
+    // If data isn't ready yet, loading screen will keep showing
   };
+
+  // When data becomes ready and we're still on loading screen, check if animation is done
+  useEffect(() => {
+    if (isDataReady && stats && screen === "loading") {
+      // Data is ready, but we need to wait for loading animation
+      // The LoadingScreen will call handleLoadingComplete when done
+    }
+  }, [isDataReady, stats, screen]);
 
   const handleFinish = () => {
     setScreen("gameover");
@@ -84,7 +99,10 @@ export default function UserStatsClient({ username }: UserStatsClientProps) {
   return (
     <CRTOverlay>
       {screen === "loading" && (
-        <LoadingScreen onComplete={handleLoadingComplete} />
+        <LoadingScreen
+          onComplete={handleLoadingComplete}
+          isDataReady={isDataReady}
+        />
       )}
 
       {screen === "stats" && stats && (

@@ -6,29 +6,51 @@ interface VersusComparisonProps {
 }
 
 export function VersusComparison({ stats }: VersusComparisonProps) {
-  const globalAverage = 127;
-  const avgDedication = 23;
+  // Use real global averages from database, or hide comparison if no data
+  const hasGlobalData = stats.globalAverages.avgCommits > 0;
 
   const comparisons = [
     {
       label: "WEEKEND COMMITS",
       yours: stats.totalWeekendCommits,
-      average: globalAverage,
+      average: stats.globalAverages.avgCommits,
       unit: "",
     },
     {
       label: "DEDICATION SCORE",
       yours: stats.dedicationPercentage,
-      average: avgDedication,
+      average: stats.globalAverages.avgDedication,
       unit: "%",
     },
     {
       label: "LONGEST STREAK",
       yours: stats.longestStreak,
-      average: 4,
+      average: stats.globalAverages.avgStreak,
       unit: " weeks",
     },
   ];
+
+  // Don't show comparison if no global data available
+  if (!hasGlobalData) {
+    return (
+      <div className="space-y-6">
+        {/* Rank Display Only */}
+        <div className="pixel-border bg-card p-4 md:p-6 text-center border-arcade-yellow">
+          <Trophy className="w-10 h-10 md:w-12 md:h-12 mx-auto text-arcade-yellow mb-3 md:mb-4" />
+          <p className="text-xs md:text-base font-pixel text-arcade-yellow">
+            YOUR RANK
+          </p>
+          <p className="text-2xl md:text-5xl font-pixel text-foreground my-2">
+            #{stats.globalRank.toLocaleString()} /{" "}
+            {stats.totalPlayers.toLocaleString()}
+          </p>
+          <p className="text-arcade-green text-base md:text-2xl font-pixel">
+            TOP {stats.percentile}% OF PLAYERS
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -40,7 +62,7 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
           </span>
           <Zap className="w-6 h-6 text-arcade-yellow" />
           <span className="text-lg md:text-xl font-pixel text-arcade-cyan">
-            THE WORLD
+            ALL PLAYERS
           </span>
         </div>
       </div>
@@ -79,16 +101,18 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
           </div>
         </div>
 
-        {/* Global Side */}
+        {/* All Players Side */}
         <div className="pixel-border bg-card p-2 md:p-4 text-center border-arcade-cyan">
           <div className="text-2xl md:text-4xl mb-1 md:mb-2">👥</div>
           <p className="text-[10px] md:text-sm font-pixel text-arcade-cyan">
-            EVERYONE ELSE
+            ALL PLAYERS
           </p>
           <div className="mt-2 md:mt-4 space-y-1 md:space-y-2 text-[10px] md:text-xs font-pixel">
             <div className="flex justify-between">
               <span className="text-muted-foreground">AVG</span>
-              <span className="text-arcade-yellow">{globalAverage}</span>
+              <span className="text-arcade-yellow">
+                {stats.globalAverages.avgCommits}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">TOTAL</span>
@@ -172,14 +196,14 @@ export function VersusComparison({ stats }: VersusComparisonProps) {
       <div className="pixel-border bg-card p-4 md:p-6 text-center border-arcade-yellow">
         <Trophy className="w-10 h-10 md:w-12 md:h-12 mx-auto text-arcade-yellow mb-3 md:mb-4" />
         <p className="text-xs md:text-base font-pixel text-arcade-yellow">
-          GLOBAL RANK
+          YOUR RANK
         </p>
         <p className="text-2xl md:text-5xl font-pixel text-foreground my-2">
           #{stats.globalRank.toLocaleString()} /{" "}
           {stats.totalPlayers.toLocaleString()}
         </p>
         <p className="text-arcade-green text-base md:text-2xl font-pixel">
-          TOP {stats.percentile}% OF ALL PLAYERS
+          TOP {stats.percentile}% OF PLAYERS
         </p>
       </div>
     </div>
