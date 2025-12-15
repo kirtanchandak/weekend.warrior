@@ -22,6 +22,9 @@ class DatabaseService {
     const mongoUri = process.env.MONGODB_URI;
 
     if (!mongoUri) {
+      console.warn(
+        "MongoDB URI not configured - leaderboard features disabled"
+      );
       throw new Error(
         "MongoDB URI not configured. Please add MONGODB_URI to your environment variables."
       );
@@ -30,8 +33,9 @@ class DatabaseService {
     try {
       this.client = new MongoClient(mongoUri, {
         maxPoolSize: 10,
-        serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000,
+        serverSelectionTimeoutMS: 3000,
+        connectTimeoutMS: 3000,
+        socketTimeoutMS: 3000,
       });
       await this.client.connect();
       this.db = this.client.db("weekend-warrior");
@@ -56,6 +60,10 @@ class DatabaseService {
       console.log("Connected to MongoDB successfully");
     } catch (error) {
       console.error("Failed to connect to MongoDB:", error);
+      // Clean up on connection failure
+      this.client = null;
+      this.db = null;
+      this.leaderboardCollection = null;
       throw error;
     }
   }

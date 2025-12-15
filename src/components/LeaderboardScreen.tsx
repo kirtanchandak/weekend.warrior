@@ -81,7 +81,7 @@ export function LeaderboardScreen({
   const getRankClass = (rank: number, username: string) => {
     const isCurrentUser = username === currentUser;
     const baseClass =
-      "flex items-center gap-4 p-3 border-b border-foreground/20";
+      "flex items-center gap-2 sm:gap-4 p-2 sm:p-3 border-b border-foreground/20";
 
     if (isCurrentUser) {
       return `${baseClass} bg-arcade-cyan/20 border-arcade-cyan`;
@@ -124,72 +124,81 @@ export function LeaderboardScreen({
   }
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen p-2 sm:p-4">
       {/* Header */}
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center justify-between gap-2 sm:gap-4 mb-4 sm:mb-6">
           <button
             onClick={onBack}
-            className="arcade-button text-sm flex items-center gap-2"
+            className="arcade-button text-xs sm:text-sm flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2"
           >
-            <ArrowLeft className="w-4 h-4" />
-            BACK
+            <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">BACK</span>
           </button>
 
           <div className="flex-1 text-center">
-            <h1 className="text-2xl md:text-3xl font-pixel text-arcade-yellow">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-pixel text-arcade-yellow">
               LEADERBOARD
             </h1>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
               2025 Weekend Warriors
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Users className="w-4 h-4" />
-            {leaderboard.length} Players
+          <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs text-muted-foreground">
+            <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">
+              {leaderboard.length} Players
+            </span>
+            <span className="sm:hidden">{leaderboard.length}</span>
           </div>
         </div>
 
         {/* Stats Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="pixel-border bg-card p-4 text-center">
-            <Trophy className="w-8 h-8 text-arcade-yellow mx-auto mb-2" />
-            <div className="text-lg font-pixel text-foreground">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
+          <div className="pixel-border bg-card p-2 sm:p-4 text-center">
+            <Trophy className="w-5 h-5 sm:w-8 sm:h-8 text-arcade-yellow mx-auto mb-1 sm:mb-2" />
+            <div className="text-sm sm:text-lg font-pixel text-foreground">
               {leaderboard[0]?.totalWeekendCommits || 0}
             </div>
-            <div className="text-xs text-muted-foreground">TOP SCORE</div>
+            <div className="text-[8px] sm:text-xs text-muted-foreground">
+              TOP SCORE
+            </div>
           </div>
 
-          <div className="pixel-border bg-card p-4 text-center">
-            <TrendingUp className="w-8 h-8 text-arcade-cyan mx-auto mb-2" />
-            <div className="text-lg font-pixel text-foreground">
+          <div className="pixel-border bg-card p-2 sm:p-4 text-center">
+            <TrendingUp className="w-5 h-5 sm:w-8 sm:h-8 text-arcade-cyan mx-auto mb-1 sm:mb-2" />
+            <div className="text-sm sm:text-lg font-pixel text-foreground">
               {Math.round(
                 leaderboard.reduce((sum, p) => sum + p.totalWeekendCommits, 0) /
                   leaderboard.length
               ) || 0}
             </div>
-            <div className="text-xs text-muted-foreground">AVERAGE</div>
+            <div className="text-[8px] sm:text-xs text-muted-foreground">
+              AVERAGE
+            </div>
           </div>
 
-          <div className="pixel-border bg-card p-4 text-center">
-            <Users className="w-8 h-8 text-arcade-green mx-auto mb-2" />
-            <div className="text-lg font-pixel text-foreground">
+          <div className="pixel-border bg-card p-2 sm:p-4 text-center">
+            <Users className="w-5 h-5 sm:w-8 sm:h-8 text-arcade-green mx-auto mb-1 sm:mb-2" />
+            <div className="text-sm sm:text-lg font-pixel text-foreground">
               {leaderboard.length}
             </div>
-            <div className="text-xs text-muted-foreground">TOTAL PLAYERS</div>
+            <div className="text-[8px] sm:text-xs text-muted-foreground">
+              PLAYERS
+            </div>
           </div>
         </div>
 
         {/* Leaderboard List */}
         <div className="pixel-border bg-card">
-          <div className="p-4 border-b border-foreground/20">
-            <h2 className="text-lg font-pixel text-arcade-cyan">
+          <div className="p-2 sm:p-4 border-b border-foreground/20">
+            <h2 className="text-sm sm:text-lg font-pixel text-arcade-cyan">
               TOP WEEKEND WARRIORS
             </h2>
           </div>
 
-          <div className="max-h-96 overflow-y-auto custom-scrollbar">
+          <div className="max-h-[60vh] sm:max-h-96 overflow-y-auto custom-scrollbar">
             {leaderboard.length === 0 ? (
               <div className="p-8 text-center text-muted-foreground">
                 <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -207,29 +216,33 @@ export function LeaderboardScreen({
                     router.push(`/stats/${encodeURIComponent(player.username)}`)
                   }
                 >
-                  <div className="flex items-center gap-3">
-                    {getRankIcon(player.rank || 0)}
-                    <div className="flex-1">
-                      <div className="font-pixel text-sm text-foreground">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                    <div className="flex-shrink-0">
+                      {getRankIcon(player.rank || 0)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-pixel text-xs sm:text-sm text-foreground truncate">
                         {player.username}
                         {player.username === currentUser && (
-                          <span className="ml-2 text-xs text-arcade-cyan">
+                          <span className="ml-1 sm:ml-2 text-[10px] sm:text-xs text-arcade-cyan">
                             (YOU)
                           </span>
                         )}
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-[10px] sm:text-xs text-muted-foreground truncate">
                         {player.achievementsUnlocked} achievements •{" "}
                         {player.dedicationPercentage}% dedication
                       </div>
                     </div>
                   </div>
 
-                  <div className="text-right">
-                    <div className="font-pixel text-lg text-arcade-yellow">
+                  <div className="text-right flex-shrink-0">
+                    <div className="font-pixel text-sm sm:text-lg text-arcade-yellow">
                       {player.totalWeekendCommits}
                     </div>
-                    <div className="text-xs text-muted-foreground">commits</div>
+                    <div className="text-[10px] sm:text-xs text-muted-foreground">
+                      commits
+                    </div>
                   </div>
                 </div>
               ))
@@ -238,7 +251,7 @@ export function LeaderboardScreen({
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-6 text-xs text-muted-foreground">
+        <div className="text-center mt-4 sm:mt-6 text-[10px] sm:text-xs text-muted-foreground px-2">
           <p>Rankings based on total weekend commits in 2025</p>
           <p className="mt-1">Updated in real-time</p>
         </div>
